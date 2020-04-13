@@ -5,6 +5,9 @@
 	const $LOGIN = $('#loginform');
 	const $LOGOUT = $('#logout');
 
+	var token = sessionStorage.getItem('jwtToken');
+	console.info("Token on load: ", token);
+
 	function runAjax(postID,newTitle) {
 		$.ajax({
 			url : RESTROOT + '/wp/v2/posts/' + postID,
@@ -65,8 +68,10 @@
 
 		.done(function(response){
 			sessionStorage.setItem('jwtToken', response.token);
+			sessionStorage.setItem('username', username);
 			$LOGIN.toggle();
 			$LOGOUT.toggle();
+			$('.username').text(username);
 			editPost();
 		})
 
@@ -77,22 +82,33 @@
 
 	function clearToken() {
 		sessionStorage.removeItem('jwtToken');
+		sessionStorage.removeItem('username');
 		$LOGIN.toggle();
 		$LOGOUT.toggle();
+		$('.username').text('');
+		$('.edit-title').remove();
 	}
 
-	$LOGIN.toggle();
-	$('#login_button').click(function(e){
-		e.preventDefault();
-		let username = document.querySelector('#user_login').value;
-		let password = document.querySelector('#user_pass').value;
-		console.info("Username: " + username + " Password: " + password);
+	if ( token === null ) {
+		$LOGIN.toggle();
+		$('#login_button').click(function(e){
+			e.preventDefault();
+			let username = document.querySelector('#user_login').value;
+			let password = document.querySelector('#user_pass').value;
+			console.info("Username: " + username + " Password: " + password);
+	
+			// Get JWT token
+			getToken( username, password );
+		});
+	} else {
+		$LOGOUT.toggle();
+
+		let username = sessionStorage.getItem('username');
 
 		$('.username').text(username);
 
-		// Get JWT token
-		getToken( username, password );
-	});
+		editPost();
+	}
 
 	// Clear token on logout
 	$('#logout').click(clearToken);
