@@ -194,11 +194,11 @@ if ( 'authorize' == $method ) {
 
 		// Redirect Fix - Option
 		if ( $settings['home_url_modify'] ) {
-			wp_redirect( wp_login_url( home_url( $_SERVER['REQUEST_URI'] ) ) );
+			wp_redirect( wp_login_url( 'http://' . $_SERVER['REQUEST_URI'] ) );
 			exit;
 		}
 
-		wp_redirect( wp_login_url( site_url( $_SERVER['REQUEST_URI'] ) ) );
+		wp_redirect( wp_login_url(  $_SERVER['REQUEST_URI']  ) );
 		exit;
 	}
 

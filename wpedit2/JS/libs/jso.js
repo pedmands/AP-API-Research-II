@@ -693,11 +693,11 @@ define('store',['require','exports','module','./utils'],function(require, export
 	};
 
 	store.getTokens = function(provider) {
-		// log("Get Tokens (" + provider+ ")");
+		log("Get Tokens (" + provider + ")");
 		var tokens = JSON.parse(localStorage.getItem("tokens-" + provider));
 		if (!tokens) tokens = [];
 
-		log("Token received", tokens);
+		log("Token received 💩", tokens);
 		return tokens;
 	};
 	store.wipeTokens = function(provider) {

@@ -19,8 +19,7 @@ jQuery( document ).ready(function($){
         // Check if the string entered in the form is a porper URL.
         try {
             $('.error').remove();
-            var cleanURL = (new URL(rawURL)).protocol + '//' + (new URL(rawURL)).hostname + '/WP-API-2';
-            restURL = cleanURL + '/wp-json/wp/v2/';
+            restURL = 'http://localhost/WP-API-2/wp-json/wp/v2/';
             // Get the posts from the new URL.
             console.log(restURL);
             getPostList();

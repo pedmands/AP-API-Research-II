@@ -1,18 +1,18 @@
 // Based on https://github.com/andreassolberg/jso/tree/version3
 
-var ROOTURL = "http://localhost/WP-API-2";
-const RESTROOT = ROOTURL + '/wp-json';
+var ROOTURL = "http://localhost/";
+const RESTROOT = "http://localhost/WP-API-2/wp-json";
 const $ENTRYTITLE = $('.post-title');
 
-var jso = new JSO({
-	providerID: "localhost/WP-API-2",
+var client = new JSO({
+	providerID: "localhost",
 	client_id: "eW3uQCQ9ZkXcAvTBZ5V4IEcxEhiefart7vYX8O77",
-	redirect_uri: "http://127.0.0.1:5500/index.html", // The URL where you is redirected back, and where you perform run the callback() function.
-	authorization: ROOTURL + '/oauth/authorize',
+	redirect_uri: "http://127.0.0.1/", // The URL where you is redirected back, and where you perform run the callback() function.
+	authorization: 'http://localhost/WP-API-2/oauth/authorize',
 });
 
 // Catch the response after login:
-jso.callback();
+client.callback();
 
 // Create the login button:
 $('.site-branding').after( '<button id="login" class="login-button login">Login</button>' );
@@ -70,16 +70,18 @@ function enableEdits() {
 }
 
 
-function oauthLogin() {
-
-	console.info('Login button pressed!');
-
+function oAuthLogin() {
+	client.getToken(function(newToken) {
+		console.log("I got the token: 💩 ", newToken.access_token);
+	});
+	enableEdits();
 }
 
+
 // Wipe sessionStorage and tokens on logout:
-function oauthLogout() {
+function oAuthLogout() {
 	$('.edit-title.edit-button').toggle();
-	jso.wipeTokens();
+	client.wipeTokens();
 }
 
 
@@ -87,10 +89,10 @@ $('#login').click(function() {
 	console.info("click");
     if ( $(this).hasClass("login") ) {
         $(this).text("Log out").removeClass("login").addClass("logout");
-        oauthLogin();
+        oAuthLogin();
     } else {
         $(this).text("Log in").removeClass("logout").addClass("login");
-        oauthLogout();
+        oAuthLogout();
     }
 
 });
