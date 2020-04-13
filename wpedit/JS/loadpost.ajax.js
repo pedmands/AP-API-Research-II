@@ -32,10 +32,23 @@ jQuery( document ).ready(function($){
         }
     };
 
+    $('#is_sticky').on('click', getPostList);
+
     function getPostList() {
+        var sticky = document.querySelector('#is_sticky').checked;
+        var jsonURL;
+
+        console.log(sticky);
+
+        if ( sticky ) {
+            jsonURL = restURL + 'posts/?sticky=true';
+        } else {
+            jsonURL = restURL + 'posts/';
+        }
+
+        console.log(jsonURL);
 
         $('.nav-loader').toggle();
-        var jsonURL = restURL + 'posts/';
 
         $.ajax({
             dataType: 'json',
@@ -47,7 +60,7 @@ jQuery( document ).ready(function($){
         })
 
         .fail(function() {
-            console.error('REST error. Nothing returned for AJAX.');
+            console.error('REST error getPostList. Nothing returned for AJAX.');
         })
 
         .always(function() {
@@ -81,11 +94,20 @@ jQuery( document ).ready(function($){
         $('.navigation-list a').removeClass('current');
         $(this).addClass('current').append('<img src="JS/spinner.svg" class="ajax-loader" />');
         $('.main-area').addClass('loading');
+        var sticky = document.querySelector('#is_sticky').checked;
 
         var postID = $(this).attr('data-id');
 
+
         // Create REST API request.
-        var jsonURL = restURL + 'posts/' + postID + '?_embed=true';
+        var jsonURL;
+
+        if ( sticky ) {
+            jsonURL = restURL + 'posts/' + postID + '?sticky=true&_embed=true';
+        } else {
+            jsonURL = restURL + 'posts/' + postID + '?_embed=true';
+        }
+
 
         // AJAX the post data
         $.ajax({
