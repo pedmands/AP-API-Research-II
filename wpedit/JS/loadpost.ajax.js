@@ -34,16 +34,25 @@ jQuery( document ).ready(function($){
 
     $('#is_sticky').on('click', getPostList);
 
+    $('#options_button').click(function(e){
+        e.preventDefault();
+        getPostList();
+    });
+
     function getPostList() {
         var sticky = document.querySelector('#is_sticky').checked;
-        var jsonURL;
+        var category = document.querySelector('#category').value;
+        var jsonURL = restURL + 'posts/?';
 
         console.log(sticky);
+        console.log(category);
 
         if ( sticky ) {
-            jsonURL = restURL + 'posts/?sticky=true';
-        } else {
-            jsonURL = restURL + 'posts/';
+            jsonURL = jsonURL + '&sticky=true';
+        }
+
+        if ( category ){
+            jsonURL = jsonURL + '&categories=' + category;
         }
 
         console.log(jsonURL);
@@ -95,18 +104,24 @@ jQuery( document ).ready(function($){
         $(this).addClass('current').append('<img src="JS/spinner.svg" class="ajax-loader" />');
         $('.main-area').addClass('loading');
         var sticky = document.querySelector('#is_sticky').checked;
+        var category = document.querySelector('#category').value;
+        
 
         var postID = $(this).attr('data-id');
 
 
         // Create REST API request.
-        var jsonURL;
+        var jsonURL = restURL + 'posts/?';
 
         if ( sticky ) {
-            jsonURL = restURL + 'posts/' + postID + '?sticky=true&_embed=true';
-        } else {
-            jsonURL = restURL + 'posts/' + postID + '?_embed=true';
+            jsonURL = jsonURL + '&sticky=true';
         }
+
+        if ( category ){
+            jsonURL = jsonURL + '&categories=' + category;
+        }
+
+        jsonURL = restURL + 'posts/' + postID + '?_embed=true';
 
 
         // AJAX the post data

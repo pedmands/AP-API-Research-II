@@ -489,6 +489,10 @@ Main layout
 	flex: 1 1 100%;
 }
 
+label {
+	display: block;
+}
+
 .sticky-option {
 	padding: 1rem;
 }
