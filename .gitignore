@@ -2,3 +2,4 @@ uploads/
 themes/*
 plugins/*
 !plugins/restedit/
+!plugins/restedit/js/

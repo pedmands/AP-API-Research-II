@@ -11,3 +11,9 @@ Domain Path: /languages
 Text Domain: restedit
 */
 
+function restedit_scripts() {
+    if ( !is_admin() && is_single() ) {
+        wp_enqueue_script('restedit_script', plugin_dir_url(__FILE__) . 'js/restedit.ajax.js', array('jquery'), '0.1', true);
+    }
+}
+add_action( 'wp_enqueue_scripts', 'restedit_scripts');
