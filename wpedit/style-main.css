@@ -438,6 +438,10 @@ Header styles
 	color: white;
 }
 
+.username {
+	color: white;
+}
+
 #loginform input,
 #logout {
 	margin: 0 .2em;
