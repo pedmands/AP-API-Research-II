@@ -4,3 +4,4 @@ plugins/*
 !plugins/restedit/
 !plugins/restedit/js/
 !plugins/jwt-authentication-for-wp-rest-api/
+!plugins/oauth2-provider/
