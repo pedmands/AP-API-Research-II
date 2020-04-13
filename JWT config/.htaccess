@@ -1,19 +1,20 @@
-
 # BEGIN WordPress
 # The directives (lines) between `BEGIN WordPress` and `END WordPress` are
 # dynamically generated, and should only be modified via WordPress filters.
 # Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /WP-API-2/
-# JSON Web Token settings:
+
 RewriteCond %{HTTP:Authorization} ^(.*)
-RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
-RewriteRule ^index\.php$ - [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
+RewriteRule (.*) - [e=HTTP_AUTHORIZATION:%1]
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+RewriteBase /WebApp/
+RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
-# END JWT settings
+RewriteRule . /WP-API-2/index.php [L]
 </IfModule>
 
 # END WordPress
