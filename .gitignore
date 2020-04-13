@@ -1,4 +1,4 @@
 uploads/
 themes/*
 plugins/*
-!plugins/restedit.php
+!plugins/restedit/
