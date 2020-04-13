@@ -13,7 +13,8 @@ Text Domain: restedit
 
 function restedit_scripts() {
     if ( !is_admin() && is_single() ) {
-
+        
+        // Limit edit button to Editors and Admins
         if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
 
             wp_enqueue_script('restedit_script', plugin_dir_url(__FILE__) . 'js/restedit.ajax.js', array('jquery'), '0.1', true);
